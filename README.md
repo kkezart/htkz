@@ -61,6 +61,36 @@ npm run dev -- --host 0.0.0.0 --port 5173
 - Frontend: `http://YOUR_SERVER_IP:5173`
 - Backend health: `http://YOUR_SERVER_IP:8000/health`
 
+## One-button run (systemd on VPS)
+This creates services so you can start everything with **one command**.
+
+### A) Install the services (run once)
+**Where:** VPS terminal (after `ssh root@YOUR_SERVER_IP`)
+```bash
+cd /root/htkz
+chmod +x scripts/setup_systemd.sh scripts/redeploy.sh
+sudo ./scripts/setup_systemd.sh
+```
+
+### B) Start/Restart with one command (anytime)
+**Where:** your PC (PowerShell or CMD)
+```bash
+ssh root@YOUR_SERVER_IP "systemctl restart htkz-backend htkz-frontend"
+```
+
+### C) Update to latest code and restart (one command)
+**Where:** your PC (PowerShell or CMD)
+```bash
+ssh root@YOUR_SERVER_IP "sudo /root/htkz/scripts/redeploy.sh"
+```
+
+### D) Check status
+**Where:** your PC (PowerShell or CMD)
+```bash
+ssh root@YOUR_SERVER_IP "systemctl status htkz-backend --no-pager"
+ssh root@YOUR_SERVER_IP "systemctl status htkz-frontend --no-pager"
+```
+
 ### Common mistakes (quick check)
 - **Running Linux paths in PowerShell**: `/root/...` only exists on the server, not on Windows.
 - **No output from `ls /root/htkz`**: clone did not finish or wrong directory.
