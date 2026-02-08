@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Short-Form Video Director — Preview</title>
+    <style>
+      :root {
+        font-family: "Inter", system-ui, sans-serif;
+        color: #0f172a;
+        background-color: #f8fafc;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 24px 64px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .hero {
+        display: flex;
+        gap: 24px;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+        margin: 8px 0 12px;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 12px;
+        color: #475569;
+      }
+
+      .subhead {
+        font-size: 18px;
+        color: #475569;
+        max-width: 540px;
+      }
+
+      .hero-card {
+        background: #0f172a;
+        color: white;
+        padding: 20px;
+        border-radius: 16px;
+        max-width: 320px;
+      }
+
+      .hero-card ul {
+        margin: 12px 0 0;
+        padding-left: 16px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+      }
+
+      .form {
+        display: grid;
+        gap: 12px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      input,
+      select {
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+
+      .button {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .button.ghost {
+        background: transparent;
+        color: #2563eb;
+        border: 1px solid #bfdbfe;
+      }
+
+      .output {
+        display: grid;
+        gap: 24px;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .pill {
+        background: #e2e8f0;
+        color: #1e293b;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .hooks {
+        padding-left: 20px;
+        color: #0f172a;
+      }
+
+      .storyboard {
+        display: grid;
+        gap: 12px;
+      }
+
+      .storybeat {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #f1f5f9;
+      }
+
+      .storybeat-time {
+        font-weight: 700;
+        color: #1e293b;
+      }
+
+      .storybeat-label {
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+
+      .storybeat-instruction {
+        margin: 0 0 4px;
+        color: #475569;
+      }
+
+      .storybeat-script {
+        margin: 0;
+      }
+
+      .teleprompter {
+        display: grid;
+        gap: 12px;
+      }
+
+      .teleprompter-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .teleprompter-controls {
+        display: flex;
+        gap: 8px;
+      }
+
+      .teleprompter-timer {
+        font-weight: 700;
+        color: #2563eb;
+      }
+
+      .teleprompter-segment {
+        background: #0f172a;
+        color: white;
+        padding: 16px;
+        border-radius: 12px;
+      }
+
+      .teleprompter-label {
+        margin: 0 0 8px;
+        font-weight: 600;
+        color: #93c5fd;
+      }
+
+      .teleprompter-line {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .teleprompter-list {
+        display: grid;
+        gap: 6px;
+      }
+
+      .teleprompter-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: #f1f5f9;
+        font-size: 13px;
+      }
+
+      .teleprompter-row.active {
+        background: #dbeafe;
+        font-weight: 600;
+      }
+
+      .footer {
+        text-align: center;
+        color: #64748b;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">AI Short-Form Video Director</p>
+          <h1>Turn trending patterns into ready-to-record scripts.</h1>
+          <p class="subhead">
+            Analyze what is working right now, then generate a single video concept with a
+            storyboard, spoken script, and camera-ready teleprompter.
+          </p>
+        </div>
+        <div class="hero-card">
+          <h2>MVP promise</h2>
+          <ul>
+            <li>Focus on short-form velocity from the last 7–14 days.</li>
+            <li>Cluster patterns into hooks, structures, and visuals.</li>
+            <li>Deliver one script you can record immediately.</li>
+          </ul>
+        </div>
+      </header>
+
+      <section class="grid">
+        <div class="card">
+          <h3>Flow A — By topic</h3>
+          <p>Pick a niche and platform to pull the latest high-velocity clips.</p>
+          <form class="form">
+            <label>
+              Topic / niche
+              <input type="text" placeholder="e.g. Fitness coaches" />
+            </label>
+            <label>
+              Platform
+              <select>
+                <option>TikTok</option>
+                <option>Instagram Reels</option>
+                <option>YouTube Shorts</option>
+              </select>
+            </label>
+            <label>
+              Language / region
+              <input type="text" placeholder="e.g. English (US)" />
+            </label>
+            <button class="button" type="button">Generate script</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Flow B — By account</h3>
+          <p>Analyze a creator, then pull similar accounts and their top performers.</p>
+          <form class="form">
+            <label>
+              Account handle or URL
+              <input type="text" placeholder="@creator or https://" />
+            </label>
+            <label>
+              Platform
+              <select>
+                <option>TikTok</option>
+                <option>Instagram Reels</option>
+                <option>YouTube Shorts</option>
+              </select>
+            </label>
+            <label>
+              Language / region
+              <input type="text" placeholder="e.g. Spanish (MX)" />
+            </label>
+            <button class="button" type="button">Generate script</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="output">
+        <div class="card">
+          <h3>Winning patterns detected</h3>
+          <div class="pill-row">
+            <span class="pill">Pattern interrupt hooks</span>
+            <span class="pill">Hook → problem → solution</span>
+            <span class="pill">Caption emphasis on keywords</span>
+            <span class="pill">15-20s duration</span>
+          </div>
+          <h4>Hook options</h4>
+          <ul class="hooks">
+            <li>Stop scrolling if your hooks aren't working.</li>
+            <li>Here's the fastest fix for weak openers.</li>
+            <li>If I had to restart, this is how I'd hook viewers.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Video storyboard</h3>
+          <div class="storyboard">
+            <div class="storybeat">
+              <div class="storybeat-time">0-2s</div>
+              <div>
+                <p class="storybeat-label">Hook</p>
+                <p class="storybeat-instruction">
+                  Tight shot, direct eye contact, bold caption above your head.
+                </p>
+                <p class="storybeat-script">“Stop scrolling if your hooks aren't working.”</p>
+              </div>
+            </div>
+            <div class="storybeat">
+              <div class="storybeat-time">2-6s</div>
+              <div>
+                <p class="storybeat-label">Problem</p>
+                <p class="storybeat-instruction">Cut to example footage, highlight the miss.</p>
+                <p class="storybeat-script">“Most creators wait too long to show the payoff.”</p>
+              </div>
+            </div>
+            <div class="storybeat">
+              <div class="storybeat-time">6-15s</div>
+              <div>
+                <p class="storybeat-label">Solution</p>
+                <p class="storybeat-instruction">Return to camera, three quick steps on screen.</p>
+                <p class="storybeat-script">
+                  “Show the result first, name the mistake, then give the fastest fix you can
+                  teach.”
+                </p>
+              </div>
+            </div>
+            <div class="storybeat">
+              <div class="storybeat-time">15-20s</div>
+              <div>
+                <p class="storybeat-label">Close</p>
+                <p class="storybeat-instruction">Lean in and point to the follow button.</p>
+                <p class="storybeat-script">“Save this and try it on your next post.”</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card teleprompter">
+          <div class="teleprompter-header">
+            <h3>Camera mode</h3>
+            <div class="teleprompter-controls">
+              <button class="button" type="button">Start</button>
+              <button class="button ghost" type="button">Reset</button>
+            </div>
+          </div>
+          <p class="teleprompter-timer">0s / 20s</p>
+          <div class="teleprompter-segment">
+            <p class="teleprompter-label">Hook</p>
+            <p class="teleprompter-line">Stop scrolling if your hooks aren't working.</p>
+          </div>
+          <div class="teleprompter-list">
+            <div class="teleprompter-row active">
+              <span>0-2s</span>
+              <span>Stop scrolling if your hooks aren't working.</span>
+            </div>
+            <div class="teleprompter-row">
+              <span>2-6s</span>
+              <span>Most creators wait too long to show the payoff.</span>
+            </div>
+            <div class="teleprompter-row">
+              <span>6-15s</span>
+              <span>Show the result first, name the mistake, then give the fastest fix.</span>
+            </div>
+            <div class="teleprompter-row">
+              <span>15-20s</span>
+              <span>Save this and try it on your next post.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          MVP scope: script generation, trend clustering, and camera mode. Future: live trend
+          ingestion, competitor dashboards, and export workflows.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
