@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Клип {{ clip_id }} — clip.opus.pro</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <a href="/">← Создать новый клип</a>
+      <h1>Клип {{ clip_id }}</h1>
+      <pre class="clip">{{ content }}</pre>
+      <p class="meta">Создан: {{ created_at }}</p>
+      {% if expires_at %}
+      <p class="meta">Истекает: {{ expires_at }}</p>
+      {% endif %}
+    </main>
+  </body>
+</html>
