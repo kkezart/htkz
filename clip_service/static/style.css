@@ -1,0 +1,81 @@
+:root {
+  color-scheme: light dark;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #10121a;
+  color: #e7e9ee;
+}
+
+.container {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 {
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+textarea,
+input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #3d4354;
+  background: #171b26;
+  color: #f6f7fb;
+  padding: 0.7rem;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 1rem;
+  background: #5b7cff;
+  border: none;
+  color: white;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.alert {
+  border-radius: 8px;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+}
+
+.success {
+  background: rgba(67, 183, 94, 0.18);
+  border: 1px solid #43b75e;
+}
+
+.error {
+  background: rgba(255, 76, 76, 0.15);
+  border: 1px solid #ff4c4c;
+}
+
+.clip {
+  background: #171b26;
+  border: 1px solid #3d4354;
+  border-radius: 8px;
+  padding: 0.9rem;
+  white-space: pre-wrap;
+}
+
+.meta {
+  opacity: 0.8;
+}

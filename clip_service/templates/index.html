@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>clip.opus.pro</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>clip.opus.pro</h1>
+      <p class="subtitle">Публикуй текст и делись короткой ссылкой</p>
+
+      {% if error %}
+      <div class="alert error">{{ error }}</div>
+      {% endif %}
+
+      {% if created_url %}
+      <div class="alert success">
+        Клип создан: <a href="{{ created_url }}">{{ created_url }}</a>
+        {% if expires_at %}
+        <div class="meta">Истекает: {{ expires_at }}</div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <form method="post">
+        <label for="content">Текст клипа</label>
+        <textarea id="content" name="content" rows="10" maxlength="10000" required></textarea>
+
+        <label for="ttl_minutes">TTL (минуты, опционально)</label>
+        <input id="ttl_minutes" name="ttl_minutes" type="number" min="1" max="10080" />
+
+        <button type="submit">Создать клип</button>
+      </form>
+    </main>
+  </body>
+</html>
